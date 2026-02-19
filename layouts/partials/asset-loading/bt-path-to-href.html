@@ -1,0 +1,12 @@
+{{ $href := $.Path }}
+{{- if in $.Path "assets/" -}}
+  {{- $sections := split $.Path "assets/" -}}
+  {{- $path := index $sections 1 -}}
+  {{- $asset := resources.Get $path -}}
+  {{- $href = $asset.RelPermalink -}}
+{{- else if in $.Path "static/" -}}
+  {{- $sections := split $.Path "static/" -}}
+  {{- $path := index $sections 1 -}}
+  {{- $href = printf "/%v" $path -}}
+{{- end -}}
+{{- return $href -}}

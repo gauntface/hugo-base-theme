@@ -1,28 +1,3 @@
-{{- define "partials/_bt-path-to-asset" -}}
-  {{ $asset := "" }}
-  {{- if in $.Path "assets/" -}}
-    {{- $sections := split $.Path "assets/" -}}
-    {{- $path := index $sections 1 -}}
-    {{- $asset = resources.Get $path -}}
-  {{- end -}}
-  {{- return $asset -}}
-{{- end -}}
-
-{{- define "partials/_bt-path-to-href" -}}
-  {{ $href := $.Path }}
-  {{- if in $.Path "assets/" -}}
-    {{- $sections := split $.Path "assets/" -}}
-    {{- $path := index $sections 1 -}}
-    {{- $asset := resources.Get $path -}}
-    {{- $href = $asset.RelPermalink -}}
-  {{- else if in $.Path "static/" -}}
-    {{- $sections := split $.Path "static/" -}}
-    {{- $path := index $sections 1 -}}
-    {{- $href = printf "/%v" $path -}}
-  {{- end -}}
-  {{- return $href -}}
-{{- end -}}
-
 {{- define "_bt-search-for-assets" -}}
   {{- range (readDir $.Dir) -}}
     {{- $path := printf "%v/%v" $.Dir .Name -}}
