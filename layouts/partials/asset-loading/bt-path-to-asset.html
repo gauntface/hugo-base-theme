@@ -1,0 +1,7 @@
+{{ $asset := "" }}
+{{- if in $.Path "assets/" -}}
+  {{- $sections := split $.Path "assets/" -}}
+  {{- $path := index $sections 1 -}}
+  {{- $asset = resources.Get $path -}}
+{{- end -}}
+{{- return $asset -}}
