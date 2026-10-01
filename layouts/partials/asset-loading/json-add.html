@@ -1,4 +1,4 @@
-{{- $json := index $.Site.Data "base-theme" -}}
+{{- $json := index hugo.Data "base-theme" -}}
 {{- range $json -}}
   {{- range $key, $value := .css -}}
     {{- range $value -}}
