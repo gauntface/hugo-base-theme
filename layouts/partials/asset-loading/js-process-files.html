@@ -1,6 +1,12 @@
 {{- $options := dict "minify" true "params" (dict "Environment" hugo.Environment) -}}
 
-{{- $jsonFiles := index hugo.Data "base-theme" -}}
+{{- $data := dict -}}
+{{- if ge hugo.Version "0.156.0" -}}
+  {{- $data = hugo.Data -}}
+{{- else -}}
+  {{- $data = $.Site.Data -}}
+{{- end -}}
+{{- $jsonFiles := index $data "base-theme" -}}
 {{- if $jsonFiles -}}
   {{- $esbuild := index $jsonFiles "esbuild" -}}
   {{- if $esbuild -}}
