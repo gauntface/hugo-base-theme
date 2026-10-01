@@ -22,7 +22,13 @@
     {{- $name := .Name -}}
     {{- range $.DirsToCheck -}}
       {{- if eq $name . -}}
-        {{ template "_bt-search-for-assets" (dict "Dir" $name "Scratch" $.Scratch) }}
+        {{- if and (eq $name "themes") $.Themes -}}
+          {{- range $.Themes -}}
+            {{ template "_bt-search-for-assets" (dict "Dir" (printf "themes/%v" .) "Scratch" $.Scratch) }}
+          {{- end -}}
+        {{- else -}}
+          {{ template "_bt-search-for-assets" (dict "Dir" $name "Scratch" $.Scratch) }}
+        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -34,12 +40,14 @@
 {{- $filesScratch.Set "js" (slice) -}}
 {{- $filesScratch.Set "ts" (slice) -}}
 
+{{- $activeThemes := (site.Params.basetheme).themes -}}
+
 <!-- Scan for files -->
 {{- if eq hugo.Environment "production" -}}
   <!-- Only scan assets that need preprocessing when in prod -->
-  {{- template "_bt-init-search" (dict "DirsToCheck" (slice "themes" "assets") "Scratch" $filesScratch) -}}
+  {{- template "_bt-init-search" (dict "DirsToCheck" (slice "themes" "assets") "Scratch" $filesScratch "Themes" $activeThemes) -}}
 {{- else -}}
-  {{- template "_bt-init-search" (dict "DirsToCheck" (slice "themes" "assets" "static") "Scratch" $filesScratch) -}}
+  {{- template "_bt-init-search" (dict "DirsToCheck" (slice "themes" "assets" "static") "Scratch" $filesScratch "Themes" $activeThemes) -}}
 {{- end -}}
 
 {{- if (eq hugo.Environment "development") -}}
