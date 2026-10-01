@@ -31,6 +31,21 @@ Define your data in `data/base-theme/*.json` with the following format:
 
 The theme will add these assets in your development builds.
 
+### Limiting which themes are scanned
+
+By default every folder in `themes/` is scanned for CSS and JS. If `themes/`
+contains themes that are not in use, list the ones to scan in `params`:
+
+```json
+{
+  "params": {
+    "baseTheme": {
+      "themes": ["my-theme", "base-theme"]
+    }
+  }
+}
+```
+
 ### ESBuild Defines
 
 ESBuild is used to build/minify JS and TS files and you can configure the
