@@ -3,14 +3,11 @@ name: Build and Test
 on: push
 
 jobs:
-  test:
+  build-and-test:
     # Needed to make puppeteer work on GitHub Actions
     # See https://github.com/puppeteer/puppeteer/issues/12818
     # runs-on: ubuntu-latest
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        hugo-version: ['0.152.2', '0.162.1']
     steps:
 
     # This is needed by puppeteer
@@ -22,7 +19,7 @@ jobs:
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: ${{ matrix.hugo-version }}
+        hugo-version: '0.162.1'
 
     - uses: actions/checkout@v3
       with:
@@ -36,9 +33,3 @@ jobs:
 
     - name: Test
       run: npm run test
-
-  build-and-test:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "All Hugo versions passed"
