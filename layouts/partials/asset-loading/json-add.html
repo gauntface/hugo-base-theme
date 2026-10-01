@@ -1,4 +1,10 @@
-{{- $json := index hugo.Data "base-theme" -}}
+{{- $data := dict -}}
+{{- if ge hugo.Version "0.156.0" -}}
+  {{- $data = hugo.Data -}}
+{{- else -}}
+  {{- $data = $.Site.Data -}}
+{{- end -}}
+{{- $json := index $data "base-theme" -}}
 {{- range $json -}}
   {{- range $key, $value := .css -}}
     {{- range $value -}}

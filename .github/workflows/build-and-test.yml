@@ -8,6 +8,9 @@ jobs:
     # See https://github.com/puppeteer/puppeteer/issues/12818
     # runs-on: ubuntu-latest
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        hugo-version: ['0.152.2', '0.162.1']
     steps:
 
     # This is needed by puppeteer
@@ -19,7 +22,7 @@ jobs:
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: '0.162.1'
+        hugo-version: ${{ matrix.hugo-version }}
 
     - uses: actions/checkout@v3
       with:
